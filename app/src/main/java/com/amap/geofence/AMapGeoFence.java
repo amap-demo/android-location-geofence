@@ -114,7 +114,7 @@ public class AMapGeoFence implements GeoFenceListener {
         mClientAllAction = new GeoFenceClient(mContext);
         mClientAllAction.createPendingIntent(GEOFENCE_BROADCAST_ACTION);
         mClientAllAction.setGeoFenceListener(this);
-        mClientAllAction.setActivateAction(GeoFenceClient.GEOFENCE_IN | GeoFenceClient.GEOFENCE_STAYED | GeoFenceClient.GEOFENCE_OUT);
+        mClientAllAction.setActivateAction(GeoFenceClient.GEOFENCE_IN | GeoFenceClient.GEOFENCE_STAYED );
 
         addPolygonGeoFence(mPolygonFenceString1);
 //        addPolygonGeoFence(mPolygonFenceString2);
@@ -122,16 +122,16 @@ public class AMapGeoFence implements GeoFenceListener {
 //        addPolygonGeoFence(mPolygonFenceString4);
 //        addPolygonGeoFence(mPolygonFenceString5);
 
-        addCircleGeoFence(mDpoint1);
+//        addCircleGeoFence(mDpoint1);
         addCircleGeoFence(mDpoint2);
-        addCircleGeoFence(mDpoint3);
-        addCircleGeoFence(mDpoint4);
-        addCircleGeoFence(mDpoint5);
-        addCircleGeoFence(mDpoint6);
-        addCircleGeoFence(mDpoint7);
-        addCircleGeoFence(mDpoint8);
-        addCircleGeoFence(mDpoint9);
-        addCircleGeoFence(mDpoint10);
+//        addCircleGeoFence(mDpoint3);
+//        addCircleGeoFence(mDpoint4);
+//        addCircleGeoFence(mDpoint5);
+//        addCircleGeoFence(mDpoint6);
+//        addCircleGeoFence(mDpoint7);
+//        addCircleGeoFence(mDpoint8);
+//        addCircleGeoFence(mDpoint9);
+//        addCircleGeoFence(mDpoint10);
     }
 
     private void addPolygonGeoFence(String points) {
@@ -235,11 +235,11 @@ public class AMapGeoFence implements GeoFenceListener {
     public void onGeoFenceCreateFinished(List<GeoFence> geoFenceList, int errorCode, String s) {
         if (errorCode == GeoFence.ADDGEOFENCE_SUCCESS) {
             for (GeoFence fence : geoFenceList) {
-                Log.d("LG", "fenid:" + fence.getFenceId() + " customID:" + s + " " + fenceMap.containsKey(fence.getFenceId()));
+                Log.e(TAG, "fenid:" + fence.getFenceId() + " customID:" + s + " " + fenceMap.containsKey(fence.getFenceId()));
                 fenceMap.putIfAbsent(fence.getFenceId(), fence);
             }
-            Log.d("LG", "回调添加成功个数:" + geoFenceList.size());
-            Log.d("LG", "回调添加围栏个数:" + fenceMap.size());
+            Log.e(TAG, "回调添加成功个数:" + geoFenceList.size());
+            Log.e(TAG, "回调添加围栏个数:" + fenceMap.size());
             Message message = mHandler.obtainMessage();
             message.obj = geoFenceList;
             message.what = 0;
@@ -264,16 +264,21 @@ public class AMapGeoFence implements GeoFenceListener {
                 String fenceID = bundle
                         .getString(GeoFence.BUNDLE_KEY_FENCEID);
                 int status = bundle.getInt(GeoFence.BUNDLE_KEY_FENCESTATUS);
+                int code = bundle.getInt(GeoFence.BUNDLE_KEY_LOCERRORCODE);
+                Log.e(TAG, "定位失败"+code);
                 StringBuffer sb = new StringBuffer();
                 switch (status) {
                     case GeoFence.STATUS_LOCFAIL:
                         sb.append("定位失败");
+                        Log.e(TAG, "定位失败"+code);
                         break;
                     case GeoFence.STATUS_IN:
                         sb.append("进入围栏 ").append(fenceID);
+                        Log.e(TAG, "进入围栏"+fenceID);
                         break;
                     case GeoFence.STATUS_OUT:
                         sb.append("离开围栏 ").append(fenceID);
+                        Log.e(TAG, "离开围栏"+fenceID);
                         break;
                     case GeoFence.STATUS_STAYED:
                         sb.append("停留在围栏内 ").append(fenceID);

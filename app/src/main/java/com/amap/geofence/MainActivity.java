@@ -17,6 +17,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.UiSettings;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements LocationSource, A
             mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
             // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
             mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+            mAMap.moveCamera(CameraUpdateFactory.zoomTo(13));
         }
     }
 
@@ -110,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements LocationSource, A
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
+
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": "
                         + amapLocation.getErrorInfo();
@@ -130,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements LocationSource, A
             mlocationClient.setLocationListener(this);
             // 设置为高精度定位模式
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+
             // 设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
