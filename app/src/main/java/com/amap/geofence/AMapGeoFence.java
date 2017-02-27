@@ -74,7 +74,7 @@ public class AMapGeoFence implements GeoFenceListener {
     private static final DPoint mDpoint6 = new DPoint(39.999767, 116.488043);
     //鸟巢
     private static final DPoint mDpoint7 = new DPoint(39.993471, 116.396048);
-    //央视大裤衩
+    //中央电视台总部大楼
     private static final DPoint mDpoint8 = new DPoint(39.915094, 116.463683);
     //环球金融中心写字楼
     private static final DPoint mDpoint9 = new DPoint(39.918912, 116.459391);
@@ -100,23 +100,23 @@ public class AMapGeoFence implements GeoFenceListener {
         mClientInAndStayAction = new GeoFenceClient(mContext);
         mClientInAndStayAction.createPendingIntent(GEOFENCE_BROADCAST_ACTION);
         mClientInAndStayAction.setGeoFenceListener(this);
-        mClientInAndStayAction.setActivateAction(GeoFenceClient.GEOFENCE_IN | GeoFenceClient.GEOFENCE_STAYED);
+        mClientInAndStayAction.setActivateAction(GeoFenceClient.GEOFENCE_IN | GeoFenceClient.GEOFENCE_STAYED | GeoFenceClient.GEOFENCE_OUT);
 
         mClientInAndStayAction.addGeoFence("麦当劳", "快餐厅", "北京", 2, String.valueOf(mCustomID));
         mCustomID++;
-        mClientInAndStayAction.addGeoFence("kfc", "快餐厅", new DPoint(39.982375,116.305292), 5000, 2, String.valueOf(mCustomID));
-        mCustomID++;
-        mClientInAndStayAction.addGeoFence("西城区", String.valueOf(mCustomID));
-        mCustomID++;
+//        mClientInAndStayAction.addGeoFence("kfc", "快餐厅", new DPoint(39.982375,116.305292), 5000, 2, String.valueOf(mCustomID));
+//        mCustomID++;
+//        mClientInAndStayAction.addGeoFence("西城区", String.valueOf(mCustomID));
+//        mCustomID++;
     }
 
     private void addFenceAll() {
         mClientAllAction = new GeoFenceClient(mContext);
         mClientAllAction.createPendingIntent(GEOFENCE_BROADCAST_ACTION);
         mClientAllAction.setGeoFenceListener(this);
-        mClientAllAction.setActivateAction(GeoFenceClient.GEOFENCE_IN | GeoFenceClient.GEOFENCE_STAYED );
+        mClientAllAction.setActivateAction(GeoFenceClient.GEOFENCE_IN | GeoFenceClient.GEOFENCE_STAYED | GeoFenceClient.GEOFENCE_OUT);
 
-        addPolygonGeoFence(mPolygonFenceString1);
+//        addPolygonGeoFence(mPolygonFenceString1);
 //        addPolygonGeoFence(mPolygonFenceString2);
 //        addPolygonGeoFence(mPolygonFenceString3);
 //        addPolygonGeoFence(mPolygonFenceString4);
